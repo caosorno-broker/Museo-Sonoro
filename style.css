@@ -1,0 +1,140 @@
+/* ------------------------------
+   ESTILOS GENERALES
+--------------------------------*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f4f4f4;
+    color: #222;
+    line-height: 1.5;
+}
+
+/* ------------------------------
+   ENCABEZADO
+--------------------------------*/
+header {
+    background: #000;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 28px;
+    letter-spacing: 1px;
+}
+
+/* ------------------------------
+   CONTENEDORES
+--------------------------------*/
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* ------------------------------
+   TARJETAS / CARDS
+--------------------------------*/
+.card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.card h2 {
+    margin-top: 10px;
+    font-size: 22px;
+}
+
+.card p {
+    margin: 8px 0;
+}
+
+/* ------------------------------
+   BOTONES
+--------------------------------*/
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #000;
+    color: white;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #444;
+}
+
+/* ------------------------------
+   IMÁGENES DINÁMICAS
+--------------------------------*/
+.dynamic-image {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 10px;
+    border: 2px solid #ddd;
+    display: block;
+    margin: 15px auto;
+}
+
+/* Input error en rojo */
+.input-error {
+    border: 2px solid red !important;
+}
+
+/* ------------------------------
+   FOOTER
+--------------------------------*/
+footer {
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    margin-top: 30px;
+}
+
+
+body {
+  background: #000;
+  color: white;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  padding: 40px;
+}
+
+h1 {
+  margin-bottom: 40px;
+}
+
+.card {
+  background: #111;
+  padding: 20px;
+  margin: 20px auto;
+  width: 300px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 22px;
+  border: 2px solid #333;
+  transition: 0.2s;
+}
+
+.card:hover {
+  background: #222;
+  transform: scale(1.05);
+}
