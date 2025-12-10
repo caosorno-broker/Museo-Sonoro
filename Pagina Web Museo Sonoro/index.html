@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Museo Sonoro — Experiencias Inmersivas</title>
+  <meta name="description" content="Museo Sonoro: sonidos antiguos, modernos y especies extintas. Proyecto sin fines de lucro." />
+  <meta name="author" content="Carlos Osorno" />
+  <meta name="copyright" content="© Carlos Osorno 2025" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS (optional external) -->
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* Estilos integrados (puedes mover a styles.css) */
+    :root {
+      --accent: #1b4d3e;
+      --gold: #c5a059;
+    }
+    body { font-family: 'Poppins', sans-serif; background-color: #fff; color: #212529; }
+    h1,h2,h3,.navbar-brand { font-family: 'Playfair Display', serif; }
+    .badge-playlist {
+      position: absolute;
+      top: 2px;
+      right: 6px;
+      background-color: #c0392b;
+      color: #fff;
+      border-radius: 50%;
+      padding: 3px 6px;
+      font-size: 0.65rem;
+    }
+    .btn-playlist-nav {
+      position: relative;
+      color: rgba(0,0,0,0.85);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 50px;
+      padding: 6px 18px;
+      font-size: 0.9rem;
+      transition: all .25s;
+      background: #fff;
+    }
+    .btn-playlist-nav:hover { background-color: rgba(0,0,0,0.04); }
+    .carousel-item img { max-height: 520px; object-fit: cover; }
+    .card-img-top { object-fit: cover; height: 180px; }
+    .rounded-top-4 { border-top-left-radius: 1rem; border-top-right-radius: 1rem; }
+    .rounded-bottom-4 { border-bottom-left-radius: 1rem; border-bottom-right-radius: 1rem; }
+    .shadow-lg { box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+    .text-muted-small { color: #6c757d; font-size: .9rem; }
+    /* Hover ligero en tarjetas */
+    .card:hover { transform: translateY(-4px); transition: .2s ease; }
+    /* Galería */
+    #galeria img { height: 140px; object-fit: cover; }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="img/Logo MS.png" alt="Museo Sonoro" height="44" onerror="this.style.display='none'">
+      <span class="ms-2">Museo Sonoro</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNavbar">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item"><a class="nav-link active" href="#">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="#catalogo">Sonidos</a></li>
+        <li class="nav-item"><a class="nav-link" href="#colecciones">Colecciones</a></li>
+        <li class="nav-item"><a class="nav-link" href="#testimonios">Testimonios</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+
+        <!-- PLAYLIST -->
+        <li class="nav-item ms-3 position-relative">
+          <button class="btn btn-playlist-nav" data-bs-toggle="modal" data-bs-target="#modalPlaylist" aria-label="Abrir Playlist">
+            <i class="bi bi-music-note-list"></i> Playlist
+            <span id="contador-playlist" class="badge-playlist">0</span>
+          </button>
+        </li>
+
+        <!-- CARRITO PREMIUM -->
+        <li class="nav-item ms-3 position-relative">
+          <button class="btn btn-playlist-nav" data-bs-toggle="modal" data-bs-target="#modalCarritoPremium" aria-label="Abrir Carrito Premium">
+            <i class="bi bi-cart3"></i> Premium
+            <span id="contador-premium" class="badge-playlist">0</span>
+          </button>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- CARRUSEL -->
+<div id="carouselMuseo" class="carousel slide mb-5" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselMuseo" data-bs-slide-to="0" class="active" aria-current="true"></button>
+    <button type="button" data-bs-target="#carouselMuseo" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#carouselMuseo" data-bs-slide-to="2"></button>
+  </div>
+
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="img/Naturaleza.png" class="d-block w-100" alt="Naturaleza" onerror="this.src='https://placehold.co/1200x520?text=Imagen+No+Encontrada'">
+      <div class="carousel-caption d-none d-md-block text-start rounded-3 bg-dark bg-opacity-50 p-3">
+        <h5>Sonidos de la Naturaleza</h5>
+        <p class="mb-0">Relájate y escucha ríos, bosques y viento.</p>
+        <a href="#catalogo" class="btn btn-outline-light btn-sm mt-2">Explorar Sonidos</a>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <img src="img/Urbano.png" class="d-block w-100" alt="Urbano" onerror="this.src='https://placehold.co/1200x520?text=Imagen+No+Encontrada'">
+      <div class="carousel-caption d-none d-md-block rounded-3 bg-dark bg-opacity-50 p-3">
+        <h5>Sonidos Urbanos</h5>
+        <p class="mb-0">El pulso de la ciudad y sus matices sonoros.</p>
+        <a href="#catalogo" class="btn btn-light btn-sm mt-2">Explorar</a>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <img src="img/Reino Animal.png" class="d-block w-100" alt="Reino Animal" onerror="this.src='https://placehold.co/1200x520?text=Imagen+No+Encontrada'">
+      <div class="carousel-caption d-none d-md-block text-end rounded-3 bg-dark bg-opacity-50 p-3">
+        <h5>Reino Animal</h5>
+        <p class="mb-0">Especies actuales y recreaciones sonoras de especies extintas.</p>
+        <button class="btn btn-danger btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#modalIA">Más info</button>
+      </div>
+    </div>
+  </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselMuseo" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Anterior</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselMuseo" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Siguiente</span>
+  </button>
+</div>
+
+<!-- AVISO -->
+<section class="container my-4">
+  <div class="alert shadow-sm border-0 d-flex align-items-center" role="alert" style="background-color:#fff8e1; color:#6d4c41;">
+    <i class="bi bi-info-circle-fill me-2 fs-5"></i>
+    <div><strong>Aviso:</strong> Proyecto sin fines de lucro — el contenido es educativo y de preservación sonora.</div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="container my-4 text-center">
+  <h1 class="mb-3">Bienvenidos al Museo Sonoro</h1>
+  <p class="lead">Explora sonidos antiguos, contemporáneos y recreaciones inéditas. Escucha, guarda y comparte tus piezas favoritas.</p>
+</section>
+
+<!-- CATALOGO / TARJETAS -->
+<section class="container my-5" id="catalogo">
+  <h2 class="text-center mb-4">Catálogo de Sonidos</h2>
+
+  <div class="row g-4 justify-content-center">
+
+    <!-- Card 1 -->
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm border-0">
+        <img src="https://media.istockphoto.com/id/505547337/es/foto/corriente-de-las-monta%C3%B1as.jpg?s=612x612&w=0&k=20&c=zv_5dMoylJf5MnZA68Ti62_haEKQkFIXyeq-k7eC3go=" class="card-img-top" alt="Sonido Naturaleza" onerror="this.src='https://placehold.co/600x400?text=Producto'">
+        <div class="card-body">
+          <h5 class="card-title">Río Sierra — 03:12</h5>
+          <p class="card-text text-muted-small">Grabación de arroyo y aves en bosque templado.</p>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-dark w-100 rounded-pill btn-sm" onclick="agregarAPlaylist('Río Sierra', '3:12')">
+              <i class="bi bi-play-btn"></i> Agregar a Playlist
+            </button>
+            <button class="btn btn-light w-100 rounded-pill btn-sm" onclick="preEscuchar('samples/rio-sierra.mp3')">
+              <i class="bi bi-headphones"></i> Pre-escuchar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm border-0">
+        <img src="https://i0.wp.com/efe.com/wp-content/uploads/2024/03/ave-gesticula.jpg?fit=900%2C675&ssl=1" class="card-img-top" alt="Sonidos Animales" onerror="this.src='https://placehold.co/600x400?text=Producto'">
+        <div class="card-body">
+          <h5 class="card-title">Llamado de Ave — 01:45</h5>
+          <p class="card-text text-muted-small">Registro de canto de ave migratoria.</p>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-dark w-100 rounded-pill btn-sm" onclick="agregarAPlaylist('Llamado de Ave', '1:45')">
+              <i class="bi bi-play-btn"></i> Agregar
+            </button>
+            <button class="btn btn-light w-100 rounded-pill btn-sm" onclick="preEscuchar('samples/ave.mp3')">
+              <i class="bi bi-headphones"></i> Pre-escuchar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 (Edición especial / Paquete) -->
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm border-0">
+        <img src="https://content.nationalgeographic.com.es/medio/2024/12/09/mamut_38a18009_2336840245_241209124831_1280x896.webp" class="card-img-top" alt="Sonidos Extintos" onerror="this.src='https://placehold.co/600x400?text=Producto'">
+        <div class="card-body">
+          <h5 class="card-title">Recreación Mamut — 02:40</h5>
+          <p class="card-text text-muted-small">Reconstrucción sonora basada en evidencias paleontológicas.</p>
+          <p class="fw-bold" style="color:var(--gold);">Colección Especial</p>
+          <div class="d-flex gap-2">
+            <button class="btn btn-primary w-100 rounded-pill btn-sm" onclick="agregarAPlaylist('Recreación Mamut', '2:40')">
+              <i class="bi bi-music-note-list"></i> Agregar Colección
+            </button>
+            <button class="btn btn-outline-secondary w-100 rounded-pill btn-sm" data-bs-toggle="modal" data-bs-target="#modalColeccion">
+              <i class="bi bi-info-circle"></i> Detalles
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COLECCIONES / SERVICIOS ESPECIALES -->
+<section class="container my-5" id="colecciones">
+  <h2 class="text-center mb-4">Colecciones Especiales</h2>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+      <div class="card p-3 border-0 shadow-lg">
+        <div class="position-relative">
+          <img src="img/catalogo.jpg" class="card-img-top rounded-3" alt="Colección Premium" onerror="this.src='https://placehold.co/600x400?text=Colección'">
+          <span class="position-absolute top-0 end-0 bg-dark text-white px-3 py-1 m-2 rounded-pill shadow-sm small">
+            <i class="bi bi-star-fill text-warning"></i> Curaduría
+          </span>
+        </div>
+        <div class="card-body text-center">
+          <h5 class="card-title">Colección "Memorias Sonoras"</h5>
+          <p class="text-muted small">Archivos y grabaciones históricas restauradas.</p>
+          <p class="fs-4 fw-bold" style="color:var(--accent);">Acceso gratuito (registro)</p>
+          <button class="btn btn-success w-100 rounded-pill" onclick="agregarAPlaylist('Colección Memorias Sonoras', 'varios')">Agregar a Playlist</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ZONA INTERACTIVA -->
+<section class="container my-5 p-5 border rounded-4" id="interactividad">
+  <h2 class="text-center mb-4">Zona Interactiva</h2>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <h3>Tip del Experto</h3>
+      <button class="btn btn-outline-secondary rounded-pill btn-sm" onclick="mostrarAyuda()">
+        <i class="bi bi-lightbulb"></i> Ver Consejo
+      </button>
+      <div id="contenedorAyuda" class="mt-3 p-3 bg-white rounded shadow-sm" style="display:none; border-left:4px solid #198754;">
+        <p class="mb-0 small">Usa auriculares para una experiencia inmersiva y detectar detalles en frecuencias.</p>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <h3>Calidad</h3>
+      <div id="cuadroColor" onmouseover="encenderFuego()" onmouseout="apagarFuego()" class="p-4 text-center rounded-3 bg-light border d-flex align-items-center justify-content-center" style="height:100px; transition:0.3s;">
+        <span class="small text-muted">Pasa el cursor aquí</span>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <h3>Cotizador / Selector</h3>
+      <select id="selectProducto" class="form-select rounded-pill bg-light" onchange="mostrarInfoProducto()">
+        <option value="">Selecciona categoría...</option>
+        <option value="naturaleza">Naturaleza</option>
+        <option value="urbano">Urbano</option>
+        <option value="animal">Animal</option>
+      </select>
+      <div id="infoProducto" class="alert alert-light mt-2 small border" style="display:none;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section class="container my-5" id="testimonios">
+  <h2 class="mb-4 text-center">Testimonios</h2>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card p-3 shadow-sm">
+        <p>"Escuchar la recreación del mamut me hizo imaginar la prehistoria. Excelente trabajo."</p>
+        <h6 class="text-end">— Laura M.</h6>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3 shadow-sm">
+        <p>"Recomendado para estudiantes de sonido y amantes de la naturaleza."</p>
+        <h6 class="text-end">— Javier P.</h6>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3 shadow-sm">
+        <p>"Interfaz intuitiva y colecciones muy bien organizadas."</p>
+        <h6 class="text-end">— Ana R.</h6>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERÍA DINÁMICA -->
+<section id="agregar-imagen" class="container my-5">
+  <h2 class="mb-4">Agregar Imágenes Dinámicamente</h2>
+  <div class="input-group mb-3">
+    <input type="text" id="inputImagen" class="form-control" placeholder="Ingresa la URL de la imagen (ej: https://via.placeholder.com/300)">
+    <button id="btnAgregarImagen" class="btn btn-primary">Agregar Imagen</button>
+  </div>
+  <div id="galeria" class="row g-3"></div>
+</section>
+
+<!-- FORMULARIO DE CONTACTO / REGISTRO -->
+<section class="container my-5" id="contacto">
+  <h2 class="mb-4">Registro & Contacto</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4">
+          <form id="formContacto">
+            <div class="mb-3">
+              <label for="nombreContacto" class="form-label small text-muted fw-bold">NOMBRE COMPLETO</label>
+              <input type="text" class="form-control bg-light" id="nombreContacto" placeholder="Ej. Juan Pérez" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="asunto-select" class="form-label small text-muted fw-bold">MOTIVO</label>
+              <select class="form-select bg-light" id="asunto-select" required>
+                <option value="">Selecciona una opción</option>
+                <option value="registro">Registro / Taller</option>
+                <option value="consulta">Consulta técnica</option>
+                <option value="colaboracion">Colaboración</option>
+              </select>
+            </div>
+
+            <div class="mb-3 d-none" id="otro-asunto-container">
+              <label for="otro-asunto-input" class="form-label small text-muted fw-bold">ESPECIFIQUE:</label>
+              <input type="text" class="form-control" id="otro-asunto-input">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label small text-muted fw-bold d-block">PREFERENCIA DE CONTACTO</label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="modalidad" id="whatsapp" value="wa" checked>
+                <label class="form-check-label" for="whatsapp">WhatsApp</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="modalidad" id="correo" value="email">
+                <label class="form-check-label" for="correo">Correo</label>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="mensajeContacto" class="form-label small text-muted fw-bold">MENSAJE</label>
+              <textarea class="form-control bg-light" id="mensajeContacto" rows="3" placeholder="¿En qué podemos ayudarte?" required></textarea>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary rounded-pill py-2">Enviar Solicitud</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODAL PLAYLIST (equivalente a carrito) -->
+<div class="modal fade" id="modalPlaylist" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 border-0">
+      <div class="modal-header bg-dark text-white rounded-top-4">
+        <h5 class="modal-title fs-6"><i class="bi bi-music-note-list"></i> Tu Playlist</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <ul id="lista-playlist" class="list-group list-group-flush mb-3">
+          <li class="list-group-item text-center text-muted py-4">
+            <i class="bi bi-music-note-beamed fs-1 d-block mb-2"></i>
+            Tu playlist está vacía.
+          </li>
+        </ul>
+
+        <div class="d-flex justify-content-between align-items-center border-top pt-3">
+          <span class="small text-muted text-uppercase">Duración estimada</span>
+          <span class="h5 fw-bold text-success mb-0" id="total-playlist">0:00</span>
+        </div>
+      </div>
+      <div class="modal-footer border-0 bg-light rounded-bottom-4">
+        <button type="button" class="btn btn-link text-muted" data-bs-dismiss="modal">Seguir explorando</button>
+        <button type="button" class="btn btn-success rounded-pill px-4" onclick="compartirPlaylistWhatsApp()">
+          <i class="bi bi-whatsapp"></i> Compartir via WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CARRITO PREMIUM -->
+<div class="modal fade" id="modalCarritoPremium" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 border-0">
+      <div class="modal-header bg-warning text-dark rounded-top-4">
+        <h5 class="modal-title fs-6">
+          <i class="bi bi-star-fill text-dark"></i> Sonidos Premium
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <ul id="lista-premium" class="list-group list-group-flush mb-3">
+          <li class="list-group-item text-center text-muted py-4">
+            <i class="bi bi-cart3 fs-1 d-block mb-2"></i>
+            Tu carrito premium está vacío.
+          </li>
+        </ul>
+
+        <div class="d-flex justify-content-between align-items-center border-top pt-3">
+          <span class="small text-muted text-uppercase">Total</span>
+          <span class="h5 fw-bold text-success mb-0" id="total-premium">$0.00</span>
+        </div>
+      </div>
+
+      <div class="modal-footer border-0 bg-light rounded-bottom-4">
+        <button class="btn btn-secondary rounded-pill px-3" data-bs-dismiss="modal">Cerrar</button>
+        <button class="btn btn-warning rounded-pill px-4">Comprar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL COLECCIÓN / INFO -->
+<div class="modal fade" id="modalColeccion" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Detalles de la Colección Especial</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>La colección especial reúne recreaciones sonoras hechas con investigación científica y trabajo audiovisual. Acceso gratuito para estudiantes y público general.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button class="btn btn-primary" onclick="agregarAPlaylist('Colección Memorias Sonoras','varios')">Agregar a Playlist</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL IA (mencionado en carrusel) -->
+<div class="modal fade" id="modalIA" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">IA y Reconstrucción Sonora</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>Utilizamos modelos de audio y técnicas de restauración para recrear sonidos perdidos o representar especies extintas con rigor científico. Estas recreaciones son aproximaciones educativas.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button class="btn btn-primary" onclick="alert('Reproducción de muestra (simulada).')">Reproducir muestra</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OFFCANVAS -->
+<div class="container text-center my-5">
+  <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasInfo">Más sobre el Museo Sonoro</button>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasInfo" aria-labelledby="offcanvasInfoLabel">
+  <div class="offcanvas-header">
+    <h5 id="offcanvasInfoLabel">Más sobre Museo Sonoro</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+  </div>
+  <div class="offcanvas-body">
+    <p>Proyecto sin fines de lucro dedicado a preservar y compartir patrimonio sonoro. Síguenos en redes para novedades y actividades educativas.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="text-center py-4 mt-5 bg-light">
+  <div class="container">
+    <p class="mb-0">&copy; 2025 Museo Sonoro | Creado por Carlos Osorno — Proyecto Académico sin fines de lucro</p>
+    <small class="text-muted">Para usos comerciales contacta a los creadores.</small>
+  </div>
+</footer>
+
+<!-- PLAYER AUDIO OCULTO PARA PRE-ESCUCHAR -->
+<audio id="preAudio" preload="none"></audio>
+
+<!-- BOOTSTRAP JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ================= JAVASCRIPT: Interactividad (todo integrado y sin errores) ================= -->
+<script>
+  // ================= PLAYLIST (similar a carrito) =================
+  let playlist = [];
+
+  function agregarAPlaylist(nombre, duracion) {
+    playlist.push({ nombre: nombre, duracion: duracion });
+    actualizarInterfazPlaylist();
+    // feedback ligero
+    const btnText = 'Agregado a playlist';
+    // usar toast o alert simple
+    alert(`"${nombre}" agregado a tu playlist.`);
+  }
+
+  function actualizarInterfazPlaylist() {
+    document.getElementById('contador-playlist').textContent = playlist.length;
+    const lista = document.getElementById('lista-playlist');
+    const totalElemento = document.getElementById('total-playlist');
+
+    lista.innerHTML = '';
+    let totalSeconds = 0;
+    let hasVarios = false;
+
+    if (playlist.length === 0) {
+      lista.innerHTML = `
+        <li class="list-group-item text-center text-muted py-4">
+          <i class="bi bi-music-note-beamed fs-1 d-block mb-2"></i>
+          Tu playlist está vacía.
+        </li>
+      `;
+    } else {
+      playlist.forEach((item, index) => {
+        // intentar parsear duración tipo MM:SS o H:MM:SS
+        let displayDur = item.duracion;
+        if (typeof item.duracion === 'string' && item.duracion.includes(':')) {
+          const parts = item.duracion.split(':').map(p => parseInt(p,10));
+          if (parts.length === 2) { // MM:SS or M:SS
+            totalSeconds += parts[0] * 60 + parts[1];
+          } else if (parts.length === 3) {
+            totalSeconds += parts[0]*3600 + parts[1]*60 + parts[2];
+          } else {
+            // no sumar si formato raro
+            hasVarios = hasVarios || (item.duracion === 'varios');
+          }
+        } else {
+          if (item.duracion === 'varios') {
+            hasVarios = true;
+            displayDur = 'varios';
+          }
+        }
+
+        lista.innerHTML += `
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <div class="small">${item.nombre}</div>
+              <div class="text-muted small">${displayDur}</div>
+            </div>
+            <div>
+              <button class="btn btn-sm text-danger border-0" onclick="eliminarDePlaylist(${index})" title="Eliminar">
+                <i class="bi bi-x-circle"></i>
+              </button>
+            </div>
+          </li>
+        `;
+      });
+    }
+
+    // formatear totalSeconds a mm:ss
+    let totalDisplay = '0:00';
+    if (totalSeconds > 0) {
+      const mm = Math.floor(totalSeconds / 60);
+      const ss = totalSeconds % 60;
+      totalDisplay = `${mm}:${ss.toString().padStart(2,'0')}`;
+    } else if (hasVarios && playlist.length > 0) {
+      totalDisplay = 'varios';
+    }
+
+    totalElemento.textContent = totalDisplay;
+  }
+
+  function eliminarDePlaylist(index) {
+    playlist.splice(index,1);
+    actualizarInterfazPlaylist();
+  }
+
+  function compartirPlaylistWhatsApp() {
+    if (playlist.length === 0) {
+      alert('Tu playlist está vacía.');
+      return;
+    }
+    let mensaje = 'Hola, me interesa esta playlist del Museo Sonoro:%0A';
+    playlist.forEach(item => {
+      mensaje += `- ${item.nombre} (${item.duracion})%0A`;
+    });
+    const encoded = encodeURIComponent(mensaje);
+    // número de ejemplo; cámbialo por el real si lo tienes
+    const telefono = '525512345678';
+    window.open(`https://wa.me/${telefono}?text=${encoded}`, '_blank');
+  }
+
+  // ================= PRE-ESCUCHAR AUDIO =================
+  function preEscuchar(ruta) {
+    const player = document.getElementById('preAudio');
+    player.src = ruta;
+    player.play().catch(err => {
+      alert('No se pudo reproducir la muestra (origen no disponible).');
+    });
+  }
+
+  // ================= INTERACTIVIDAD =================
+  function mostrarAyuda() {
+    const x = document.getElementById('contenedorAyuda');
+    x.style.display = x.style.display === 'none' ? 'block' : 'none';
+  }
+
+  function encenderFuego() {
+    const c = document.getElementById('cuadroColor');
+    c.style.backgroundColor = '#fff8e1';
+    c.style.borderColor = '#c5a059';
+    c.innerHTML = "<strong style='color:#c5a059; font-family: Playfair Display'>Calidad Premium</strong>";
+  }
+
+  function apagarFuego() {
+    const c = document.getElementById('cuadroColor');
+    c.style.backgroundColor = '#f8f9fa';
+    c.style.borderColor = '#dee2e6';
+    c.innerHTML = "<span class='small text-muted'>Pasa el cursor aquí</span>";
+  }
+
+  function mostrarInfoProducto() {
+    const val = document.getElementById('selectProducto').value;
+    const div = document.getElementById('infoProducto');
+    const textos = {
+      naturaleza: "Colección: sonidos naturales (bosques, ríos, aves).",
+      urbano: "Colección: paisajes sonoros urbanos (calles, mercados, transporte).",
+      animal: "Colección: registros animales (actuales y recreaciones)."
+    };
+    if (textos[val]) {
+      div.style.display = 'block';
+      div.innerHTML = textos[val];
+    } else {
+      div.style.display = 'none';
+      div.innerHTML = '';
+    }
+  }
+
+  // Lógica "Otro asunto" en el formulario
+  const selectAsunto = document.getElementById('asunto-select');
+  const otroAsuntoDiv = document.getElementById('otro-asunto-container');
+  if (selectAsunto) {
+    selectAsunto.addEventListener('change', function() {
+      if (this.value === 'otro') {
+        otroAsuntoDiv.classList.remove('d-none');
+      } else {
+        otroAsuntoDiv.classList.add('d-none');
+      }
+    });
+  }
+
+  // Formulario de contacto - ejemplo simple (no envía, sólo simula)
+  document.getElementById('formContacto').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const nombre = document.getElementById('nombreContacto').value.trim();
+    const mensaje = document.getElementById('mensajeContacto').value.trim();
+    if (!nombre || !mensaje) {
+      alert('Por favor completa nombre y mensaje.');
+      return;
+    }
+    alert('Gracias, tu solicitud ha sido enviada (simulado).');
+    this.reset();
+  });
+
+/* ============================================================
+   NUEVA FUNCIÓN – Agregar imágenes dinámicas a la galería
+============================================================ */
+
+const inputImagen = document.getElementById("inputImagen");
+const btnAgregarImagen = document.getElementById("btnAgregarImagen");
+const galeria = document.getElementById("galeria");
+
+btnAgregarImagen.addEventListener("click", function () {
+
+  const url = inputImagen.value.trim();
+
+  if (url === "") {
+    alert("Por favor ingresa una URL válida.");
+    return;
+  }
+
+  // Crear columna para Bootstrap
+  const col = document.createElement("div");
+  col.classList.add("col-md-4");
+
+  // Crear imagen
+  const img = document.createElement("img");
+  img.src = url;
+  img.alt = "Imagen agregada por el usuario";
+  img.classList.add("img-fluid", "rounded", "shadow");
+
+  // Insertar imagen dentro de la columna
+  col.appendChild(img);
+
+  // Insertar columna dentro de la galería
+  galeria.appendChild(col);
+
+  // Limpiar input
+  inputImagen.value = "";
+});
+
+  // ================= UTILIDADES =================
+  // Iniciar con estado correcto
+  actualizarInterfazPlaylist();
+</script>
+
+<!-- CATALOGO DE SONIDOS PREMIUM -->
+<section>
+  <div class="row">
+
+    <!-- SONIDO 1 -->
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0 rounded-4">
+        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470" 
+             class="card-img-top rounded-top-4" alt="Bosque">
+        <div class="card-body">
+          <h5 class="card-title">Bosque Relajante</h5>
+          <p class="card-text text-muted">Viento, hojas y naturaleza pura.</p>
+          <p class="fw-bold mb-2">$30.00</p>
+          <button class="btn btn-success w-100 rounded-pill" 
+                  onclick="agregarPremium('Bosque Relajante', 30)">
+            <i class="bi bi-cart-plus"></i> Agregar al carrito
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SONIDO 2 -->
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0 rounded-4">
+        <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21" 
+             class="card-img-top rounded-top-4" alt="Lluvia">
+        <div class="card-body">
+          <h5 class="card-title">Lluvia Suave</h5>
+          <p class="card-text text-muted">Gotas calmadas para concentración.</p>
+          <p class="fw-bold mb-2">$20.00</p>
+          <button class="btn btn-success w-100 rounded-pill" 
+                  onclick="agregarPremium('Lluvia Suave', 20)">
+            <i class="bi bi-cart-plus"></i> Agregar al carrito
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Carrito -->
+<div class="mt-4">
+  <h5>Carrito Premium (<span id="contador-premium">0</span>)</h5>
+  <ul id="lista-premium" class="list-group"></ul>
+  <p class="fw-bold">Total: <span id="total-premium">$0.00</span></p>
+</div>
+
+<script>
+let carritoPremium = [];
+
+function agregarPremium(nombre, precio) {
+  carritoPremium.push({ nombre, precio });
+  document.getElementById('contador-premium').textContent = carritoPremium.length;
+  actualizarListaPremium();
+}
+
+function actualizarListaPremium() {
+  const lista = document.getElementById('lista-premium');
+  const total = document.getElementById('total-premium');
+
+  lista.innerHTML = '';
+  let suma = 0;
+
+  carritoPremium.forEach((item, index) => {
+    suma += item.precio;
+
+    const li = document.createElement('li');
+    li.className = 'list-group-item d-flex justify-content-between align-items-center';
+    li.innerHTML = `
+      <span>${item.nombre}</span>
+      <button class="btn btn-sm btn-danger rounded-pill" onclick="eliminarPremium(${index})">
+        <i class="bi bi-trash"></i>
+      </button>
+    `;
+    lista.appendChild(li);
+  });
+
+  total.textContent = `$${suma.toFixed(2)}`;
+}
+
+function eliminarPremium(index) {
+  carritoPremium.splice(index, 1);
+  document.getElementById('contador-premium').textContent = carritoPremium.length;
+  actualizarListaPremium();
+}
+</script>
+
+<!---Actividad Lista de Variedades Sonoras-->
+<section id="variedades-sonoras" class="container my-5">
+  <h2 class="mb-4">Variedades Sonoras</h2>
+  <button id="btnEliminarPrimera" class="btn btn-danger mb-3">Eliminar Primera Variedad</button>
+  <ul id="listaVariedades" class="list-group mb-3">
+    <li class="list-group-item">Sonido de Lluvia</li>
+    <li class="list-group-item">Canto de Pájaro</li>
+    <li class="list-group-item">Rugido de León</li>
+    <li class="list-group-item">Olas del Mar</li>
+    <li class="list-group-item">Viento entre Árboles</li>
+  </ul>
+  <div class="input-group mt-3">
+    <input id="inputNuevaVariedad" type="text" class="form-control" placeholder="Nueva variedad sonora">
+    <button id="btnAgregarVariedad" class="btn btn-success">Agregar Variedad</button>
+  </div>
+</section>
+
+<!-- API JAVA -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Museo Sonoro</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <h1>Museo Sonoro – Sonidos Ambientales</h1>
+<audio controls>
+  <source src="ruta/sonido_naturaleza.mp3" type="audio/mpeg">
+</audio>
+
+</body>
+</html>
